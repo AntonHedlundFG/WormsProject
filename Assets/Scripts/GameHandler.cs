@@ -5,55 +5,63 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour
 {
     [SerializeField] private GameObject wormGameObject;
+    [SerializeField] private GameObject turnHandlerGameObject;
+    
+    private TurnHandler _turnHandler;
 
-    private List<GameObject> _worms;
-    private int _currentActiveWorm;
+    public static GameHandler Instance { get; private set; }
 
-
-    // Start is called before the first frame update
+    private bool TESTstartSpawned = false;
+    
     void Start()
     {
         Init();
-        CreateNewWorm();
-        CreateNewWorm();
     }
 
-    // Update is called once per frame
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    
     void Update()
     {
+        if (!TESTstartSpawned)
+        {
+            CreateNewWorm(0);
+            CreateNewWorm(1);
+            TESTstartSpawned = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.J))
         {
-            NextActiveWorm();
+            _turnHandler.NextActiveWorm();
         }
     }
 
     private void Init()
     {
-        _worms = new List<GameObject>();
-        _currentActiveWorm = -1;
 
-    }
-
-    private void CreateNewWorm()
-    {
-        _worms.Add(Instantiate(wormGameObject, new Vector3(Random.Range(30,70), 7, 120), Quaternion.identity));
-    }
-
-    private void NextActiveWorm()
-    {
-        if (_worms.Count == 0) {return;}
-
-        if (_currentActiveWorm == -1)
+        if (TurnHandler.Instance == null)
         {
-            _currentActiveWorm++;
-            _worms[_currentActiveWorm].GetComponent<WormMovement>().StartTurn();
-            return;
+            Instantiate(turnHandlerGameObject);
         }
-
-        _worms[_currentActiveWorm].GetComponent<WormMovement>().EndTurn();
-        _currentActiveWorm = (_currentActiveWorm + 1) % _worms.Count;
-        _worms[_currentActiveWorm].GetComponent<WormMovement>().StartTurn();
+        _turnHandler = TurnHandler.Instance;
 
     }
 
+    private void CreateNewWorm(int playerID)
+    {
+        GameObject newWorm = Instantiate(wormGameObject, new Vector3(Random.Range(30, 70), 7, 120), Quaternion.identity);
+        _turnHandler.AddWorm(newWorm);
+        newWorm.GetComponent<WormHandler>().SetControllingPlayer(playerID);
+    }
+
+    
 }

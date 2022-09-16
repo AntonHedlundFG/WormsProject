@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WormWeaponHandler : MonoBehaviour
@@ -11,11 +12,16 @@ public class WormWeaponHandler : MonoBehaviour
     private IWeapon _equippedWeapon;
     private WormHandler _wormHandler;
     private TurnHandler _turnHandler;
+    private ChargeMeter _chargeMeter;
 
 
     private bool _hasShotThisTurn = false;
-    private float _endTurnDelay = 5f;
 
+    private float _endTurnDelay = 5f;
+    private float _rotationSpeed = 50f;
+
+    private float _maxrotation = 110f;
+    private float _minrotation = 10f;
 
     void Start()
     {
@@ -23,26 +29,48 @@ public class WormWeaponHandler : MonoBehaviour
     }
     void Update()
     {
-        if (_wormHandler.IsActive() && _equippedWeaponObject != null && Input.GetKeyDown(KeyCode.Return) && !_hasShotThisTurn)
+        if (_wormHandler.IsActive() && _equippedWeaponObject != null)
         {
-            _equippedWeapon.Shoot();
-            _hasShotThisTurn = true;
-            _turnHandler.NextActiveWorm(_endTurnDelay);
+            if (Input.GetKeyDown(KeyCode.Space) && !_hasShotThisTurn)
+            {
+                _equippedWeapon.PreShoot();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space) && !_hasShotThisTurn)
+            {
+                _equippedWeapon.Shoot();
+                _hasShotThisTurn = true;
+                _turnHandler.NextActiveWorm(_endTurnDelay);
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                RotateWeapon(_rotationSpeed * Time.deltaTime);
+            } else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                RotateWeapon(-_rotationSpeed * Time.deltaTime);
+            }
         }
+
+        
+
+        
     }
 
     void Init()
     {
         _wormHandler = GetComponentInParent<WormHandler>();
         _turnHandler = TurnHandler.Instance;
+        _chargeMeter = GetComponentInChildren<ChargeMeter>();
     }
     public void EquipWeapon(int weaponID)
     {
         UnEquipWeapon();
         _equippedWeaponObject = Instantiate(_weapons[weaponID], _weaponHolder.transform.position, Quaternion.identity, _weaponHolder.transform);
         _equippedWeapon = _equippedWeaponObject.GetComponent<IWeapon>();
+        _equippedWeapon.SetChargeMeter(_chargeMeter);
         RotateWeapon(_equippedWeaponObject.GetComponent<IWeapon>().GetStartRotation());
-
+        
     }
 
     public void UnEquipWeapon()
@@ -52,11 +80,18 @@ public class WormWeaponHandler : MonoBehaviour
 
     public void RotateWeapon(float rotationDegrees)
     {
-        _equippedWeaponObject.transform.Rotate(transform.right, rotationDegrees);
+        float currentRotation = _equippedWeaponObject.transform.localEulerAngles.x;
+        float newRotation = Mathf.Clamp(currentRotation + rotationDegrees, _minrotation, _maxrotation);
+        _equippedWeaponObject.transform.localEulerAngles = new Vector3(newRotation, 0, 0);
     }
 
     public void ResetShotStatus()
     {
         _hasShotThisTurn = false;
+    }
+
+    public ChargeMeter GetChargeMeter()
+    {
+        return _chargeMeter;
     }
 }

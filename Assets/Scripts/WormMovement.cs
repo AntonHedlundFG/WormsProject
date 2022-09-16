@@ -45,7 +45,7 @@ public class WormMovement : MonoBehaviour
         transform.Rotate(Vector3.up * _rotateSpeed * Time.deltaTime * xMove);
 
 
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetKeyDown(KeyCode.Return) && _isGrounded)
         {
             _rigidbody.AddForce(Vector3.up * _jumpHeight, ForceMode.VelocityChange);
         }

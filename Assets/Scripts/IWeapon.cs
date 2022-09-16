@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface IWeapon
 {
+    public void PreShoot();
     public void Shoot();
-    public void Shoot(float force);
     public float GetStartRotation();
+
+    public void SetChargeMeter(ChargeMeter chargeMeter);
 }

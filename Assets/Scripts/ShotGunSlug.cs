@@ -5,10 +5,21 @@ using UnityEngine;
 public class ShotGunSlug : MonoBehaviour
 {
     private Rigidbody _rb;
+    private float _spawnedAtTime;
+    private float _duration = 2f;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _spawnedAtTime = Time.time;
+    }
+
+    private void Update()
+    {
+        if (Time.time > _spawnedAtTime + _duration)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider otherCollider)
@@ -28,4 +39,6 @@ public class ShotGunSlug : MonoBehaviour
         Debug.Log("hit");
         Destroy(gameObject);
     }
+
+
 }

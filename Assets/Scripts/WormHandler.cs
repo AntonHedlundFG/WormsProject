@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WormHandler : MonoBehaviour
+public class WormHandler : MonoBehaviour, ILife
 {
     [SerializeField] private Material[] _wormMaterials;
 
@@ -16,6 +16,9 @@ public class WormHandler : MonoBehaviour
     private int _controllingPlayer;
     private bool _isActive;
 
+    private int _maxLife = 100;
+    private int _curLife;
+
     void Start()
     {
         Init();
@@ -25,6 +28,7 @@ public class WormHandler : MonoBehaviour
 
     private void Init()
     {
+        _curLife = _maxLife;
         _wormMovement = GetComponent<WormMovement>();
         _wormCamera = GetComponentInChildren<Camera>();
         _audioListener = GetComponentInChildren<AudioListener>();
@@ -81,4 +85,19 @@ public class WormHandler : MonoBehaviour
             _renderer.material = _wormMaterials[_controllingPlayer];
         }
     }
+
+    public void TakeDamage(int dmg)
+    {
+        _curLife -= dmg;
+        Debug.Log("Life Changed to: " + _curLife);
+        if (_curLife <= 0)
+        {
+            Death();
+        }
+    }
+
+    private void Death()
+    {
+
+    } 
 }

@@ -14,7 +14,7 @@ public class WormWeaponHandler : MonoBehaviour
     private TurnHandler _turnHandler;
     private ChargeMeter _chargeMeter;
 
-
+    private bool _startedShootingThisTurn = false;
     private bool _hasShotThisTurn = false;
 
     private float _endTurnDelay = 5f;
@@ -34,6 +34,7 @@ public class WormWeaponHandler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && !_hasShotThisTurn)
             {
                 _equippedWeapon.PreShoot();
+                _startedShootingThisTurn = true;
             }
 
             if (Input.GetKeyUp(KeyCode.Space) && !_hasShotThisTurn)
@@ -50,6 +51,15 @@ public class WormWeaponHandler : MonoBehaviour
             {
                 RotateWeapon(-_rotationSpeed * Time.deltaTime);
             }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !_startedShootingThisTurn)
+            {
+                EquipWeapon(0);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) && !_startedShootingThisTurn)
+            {
+                EquipWeapon(1);
+            }
         }
 
         
@@ -65,6 +75,11 @@ public class WormWeaponHandler : MonoBehaviour
     }
     public void EquipWeapon(int weaponID)
     {
+        if (weaponID >= _weapons.Length)
+        {
+            Debug.Log("Testing?");
+            return;
+        }
         UnEquipWeapon();
         _equippedWeaponObject = Instantiate(_weapons[weaponID], _weaponHolder.transform.position, Quaternion.identity, _weaponHolder.transform);
         _equippedWeapon = _equippedWeaponObject.GetComponent<IWeapon>();
@@ -88,6 +103,7 @@ public class WormWeaponHandler : MonoBehaviour
     public void ResetShotStatus()
     {
         _hasShotThisTurn = false;
+        _startedShootingThisTurn = false;
     }
 
     public ChargeMeter GetChargeMeter()

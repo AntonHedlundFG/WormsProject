@@ -15,14 +15,14 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
     private float _minForce = 1f;
     private float _maxForce = 2.5f;
 
-    [SerializeField] private float _curForce;
+    private float _curForce;
     private int _charging;
     private float _chargeTime = 1f;
 
 
     public void Start()
     {
-        Init();
+        
     }
     public void Update()
     {
@@ -31,13 +31,9 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
             ChangeCharge();
             _chargeMeter.UpdateBar((_curForce - _minForce) / (_maxForce - _minForce) );
         }
-        ShowCharge();
     }
 
-    private void Init()
-    {
-        
-    }
+ 
 
     public void SetChargeMeter(ChargeMeter chargeMeter)
     {
@@ -85,9 +81,4 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
         }
     }
 
-    private void ShowCharge()
-    {
-
-    }
-    
 }

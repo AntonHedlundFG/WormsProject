@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour
 {
+    [SerializeField] private GameObject _explosionGameObject;
+
     private float _createdTime;
-    private float _timeBeforeActive = 1f;
+    private float _timeBeforeActive = .2f;
     
     void Start()
     {
@@ -18,8 +20,16 @@ public class Grenade : MonoBehaviour
     {
         if (Time.time >= _createdTime + _timeBeforeActive)
         {
-            Destroy(gameObject);
+            CreateExplosion();
         }
+    }
+
+    private void CreateExplosion()
+    {
+        var explosion = Instantiate(_explosionGameObject, transform.position, Quaternion.identity);
+        Explosion explosionScript = explosion.GetComponent<Explosion>();
+        explosionScript.Init(transform.position);
+        Destroy(gameObject);
     }
     
 }

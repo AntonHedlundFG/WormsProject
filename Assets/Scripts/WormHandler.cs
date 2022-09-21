@@ -107,6 +107,7 @@ public class WormHandler : MonoBehaviour, ILife
     private void Death()
     {
         PlayerCounter.Instance.WormKilled(_controllingPlayer);
+        _wormCamera.GetComponent<CameraDestructionDelay>().DelayDestruction();
         Destroy(gameObject);
     }
 

@@ -45,7 +45,7 @@ public class WormHandler : MonoBehaviour, ILife
         _wormCamera.depth = 10;
         _audioListener.enabled = true;
         _wormWeaponHandler.EquipWeapon(0);
-        _wormWeaponHandler.ResetShotStatus();;
+        _wormWeaponHandler.ResetShotStatus();
     }
 
     public void EndTurn()

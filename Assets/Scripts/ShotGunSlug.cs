@@ -6,12 +6,20 @@ public class ShotGunSlug : MonoBehaviour
 {
     private Rigidbody _rb;
     private float _spawnedAtTime;
-    private float _duration = 2f;
+    private float _minDuration = .5f;
+    private float _maxDuration = 1f;
+    private float _duration;
 
     void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         _rb = GetComponent<Rigidbody>();
         _spawnedAtTime = Time.time;
+        _duration = Random.Range(_minDuration, _maxDuration);
     }
 
     private void Update()

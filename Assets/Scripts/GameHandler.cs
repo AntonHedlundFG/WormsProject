@@ -75,5 +75,6 @@ public class GameHandler : MonoBehaviour
         }
 
         _turnHandler.StartGame();
+        PlayerCounter.Instance.Setup(_playerAmount, _wormsPerPlayer);
     }
 }

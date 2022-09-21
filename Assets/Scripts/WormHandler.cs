@@ -102,6 +102,7 @@ public class WormHandler : MonoBehaviour, ILife
 
     private void Death()
     {
+        PlayerCounter.Instance.WormKilled(_controllingPlayer);
         Destroy(gameObject);
     }
 

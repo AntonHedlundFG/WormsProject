@@ -16,8 +16,6 @@ public class GameHandler : MonoBehaviour
     public static GameHandler Instance { get; private set; }
 
 
-    private bool TESTstartSpawned = false;
-
 
     
     void Start()
@@ -36,14 +34,12 @@ public class GameHandler : MonoBehaviour
             Instance = this;
         }
     }
-    
-    void Update()
+
+    public void Setup(int playerAmount, int wormsPerPlayer)
     {
-        if (!TESTstartSpawned)
-        {
-            SetupWorms();
-            TESTstartSpawned = true;
-        }
+        _playerAmount = playerAmount;
+        _wormsPerPlayer = wormsPerPlayer;
+        SetupWorms();
     }
 
     private void Init()

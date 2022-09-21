@@ -40,7 +40,10 @@ public class TurnHandler : MonoBehaviour
 
     public void NextActiveWorm()
     {
-        _currentActiveWorm?.GetComponent<WormHandler>().EndTurn();
+        if (_currentActiveWorm != null)
+        {
+            _currentActiveWorm.GetComponent<WormHandler>().EndTurn();
+        }
 
         do
         {

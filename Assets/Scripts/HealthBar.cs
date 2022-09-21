@@ -42,7 +42,12 @@ public class HealthBar : MonoBehaviour
             _turnhandler = TurnHandler.Instance;
         }
 
-        _camera = _turnhandler.GetActiveWorm()?.GetComponent<WormHandler>().GetCamera();
+        GameObject currentWorm = _turnhandler.GetActiveWorm();
+        if (currentWorm != null)
+        {
+            _camera = currentWorm.GetComponent<WormHandler>().GetCamera();
+        }
+        
         if (_camera == null)
         {
             _slider.gameObject.SetActive(false);

@@ -91,13 +91,14 @@ public class WormHandler : MonoBehaviour, ILife
         _curLife -= dmg;
         if (_curLife <= 0)
         {
+            _curLife = 0;
             Death();
         }
     }
 
     private void Death()
     {
-
+        Destroy(gameObject);
     }
 
     public Camera GetCamera()

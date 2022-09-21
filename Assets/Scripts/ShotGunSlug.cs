@@ -43,8 +43,7 @@ public class ShotGunSlug : MonoBehaviour
             hit.TakeDamage(1);
             otherCollider.GetComponent<Rigidbody>().AddForce(_rb.velocity*0.01f, ForceMode.Impulse);
         }
-
-        Debug.Log("hit");
+        
         Destroy(gameObject);
     }
 

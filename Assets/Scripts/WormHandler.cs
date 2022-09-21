@@ -89,7 +89,6 @@ public class WormHandler : MonoBehaviour, ILife
     public void TakeDamage(int dmg)
     {
         _curLife -= dmg;
-        Debug.Log("Life Changed to: " + _curLife);
         if (_curLife <= 0)
         {
             Death();
@@ -99,5 +98,15 @@ public class WormHandler : MonoBehaviour, ILife
     private void Death()
     {
 
-    } 
+    }
+
+    public Camera GetCamera()
+    {
+        return _wormCamera;
+    }
+
+    public float GetLifeRatio()
+    {
+        return (float) _curLife / _maxLife;
+    }
 }

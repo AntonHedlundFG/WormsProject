@@ -63,6 +63,10 @@ public class TurnHandler : MonoBehaviour
     {
         Invoke("NextActiveWorm", delay);
     }
-    
+
+    public GameObject GetActiveWorm()
+    {
+        return _currentActiveWorm;
+    }
 
 }

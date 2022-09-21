@@ -10,6 +10,8 @@ public class SetupMenu : MonoBehaviour
     [SerializeField] private Slider _wormCountSlider;
     [SerializeField] private Button _startButton;
     [SerializeField] private TMP_Text _winnerText;
+    [SerializeField] private TMP_Text _playerCountText;
+    [SerializeField] private TMP_Text _wormCountText;
 
     public static SetupMenu Instance { get; private set; }
 
@@ -23,6 +25,7 @@ public class SetupMenu : MonoBehaviour
         {
             Instance = this;
         }
+        
     }
 
     public void StartGame()
@@ -40,5 +43,11 @@ public class SetupMenu : MonoBehaviour
         _wormCountSlider.gameObject.SetActive(true);
         _startButton.gameObject.SetActive(true);
         _winnerText.text = "The winner is player " + winningPlayer + "!";
+    }
+
+    public void SliderChanges()
+    {
+        _playerCountText.text = "Players: " + _playerCountSlider.value;
+        _wormCountText.text = "Worms: " + _wormCountSlider.value;
     }
 }

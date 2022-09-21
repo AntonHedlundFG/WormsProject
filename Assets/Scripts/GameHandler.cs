@@ -6,12 +6,19 @@ public class GameHandler : MonoBehaviour
 {
     [SerializeField] private GameObject wormGameObject;
     [SerializeField] private GameObject turnHandlerGameObject;
-    
+
+    [SerializeField] private int _playerAmount = 2;
+    [SerializeField] private int _wormsPerPlayer = 1;
+
+
     private TurnHandler _turnHandler;
 
     public static GameHandler Instance { get; private set; }
 
+
     private bool TESTstartSpawned = false;
+
+
     
     void Start()
     {
@@ -34,14 +41,8 @@ public class GameHandler : MonoBehaviour
     {
         if (!TESTstartSpawned)
         {
-            CreateNewWorm(0);
-            CreateNewWorm(1);
+            SetupWorms();
             TESTstartSpawned = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            _turnHandler.NextActiveWorm();
         }
     }
 
@@ -58,10 +59,21 @@ public class GameHandler : MonoBehaviour
 
     private void CreateNewWorm(int playerID)
     {
-        GameObject newWorm = Instantiate(wormGameObject, new Vector3(Random.Range(30, 70), 7, 120), Quaternion.identity);
+        GameObject newWorm = Instantiate(wormGameObject, new Vector3(Random.Range(30, 70), 7, Random.Range(80, 120)), Quaternion.identity);
         _turnHandler.AddWorm(newWorm);
         newWorm.GetComponent<WormHandler>().SetControllingPlayer(playerID);
     }
 
-    
+    private void SetupWorms()
+    {
+        for (int i = 0; i < _wormsPerPlayer; i++)
+        {
+            for (int j = 0; j < _playerAmount; j++)
+            {
+                CreateNewWorm(j);
+            }
+        }
+
+        _turnHandler.StartGame();
+    }
 }

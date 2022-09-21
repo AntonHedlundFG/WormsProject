@@ -45,6 +45,8 @@ public class TurnHandler : MonoBehaviour
             _currentActiveWorm.GetComponent<WormHandler>().EndTurn();
         }
 
+        CheckVictory();
+
         do
         {
             if (_worms.Count == 0)
@@ -70,6 +72,44 @@ public class TurnHandler : MonoBehaviour
     public GameObject GetActiveWorm()
     {
         return _currentActiveWorm;
+    }
+
+    public void StartGame()
+    {
+        NextActiveWorm(2f);
+    }
+
+    public void EndGame(int winningPlayer)
+    {
+        Debug.Log("Player " + winningPlayer + " wins!");
+    }
+    private void CheckVictory()
+    {
+        List<int> remainingPlayers = new List<int>();
+        int loopAmount = _worms.Count;
+        for (int i = 0; i < loopAmount; i++)
+        {
+            GameObject worm = _worms.Dequeue();
+            if (worm != null)
+            {
+                WormHandler wormHandler = worm.GetComponent<WormHandler>();
+                if (!remainingPlayers.Contains(wormHandler.GetControllingPlayer()))
+                {
+                    remainingPlayers.Add(wormHandler.GetControllingPlayer());
+                }
+                _worms.Enqueue(worm);
+            }
+        }
+
+        if (remainingPlayers.Count == 1)
+        {
+            EndGame(remainingPlayers[0]);
+        }
+
+        if (remainingPlayers.Count == 0)
+        {
+            EndGame(-1);
+        }
     }
 
 }

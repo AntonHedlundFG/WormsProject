@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,6 +74,11 @@ public class WormHandler : MonoBehaviour, ILife
         ChangeColor();
     }
 
+    public int GetControllingPlayer()
+    {
+        return _controllingPlayer;
+    }
+
     private void ChangeColor()
     {
         if (_renderer == null)
@@ -80,10 +86,8 @@ public class WormHandler : MonoBehaviour, ILife
             _renderer = GetComponent<Renderer>();
         }
 
-        if (_controllingPlayer >= 0 && _controllingPlayer < _wormMaterials.Length)
-        {
-            _renderer.material = _wormMaterials[_controllingPlayer];
-        }
+        _renderer.material = _wormMaterials[Math.Clamp(_controllingPlayer, 0, _wormMaterials.Length)];
+        
     }
 
     public void TakeDamage(int dmg)

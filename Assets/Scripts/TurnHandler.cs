@@ -81,18 +81,7 @@ public class TurnHandler : MonoBehaviour
 
     public void EndGame(int winningPlayer)
     {
-        ClearBoard();
-        PlayerCounter.Instance.EndGame();
-        SetupMenu.Instance.EndGame(winningPlayer);
-    }
-
-    private void ClearBoard()
-    {
-        while (_worms.Count > 0)
-        {
-            GameObject worm = _worms.Dequeue();
-            Destroy(worm);
-        }
+        Debug.Log("Player " + winningPlayer + " wins!");
     }
     private void CheckVictory()
     {

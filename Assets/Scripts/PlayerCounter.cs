@@ -13,7 +13,7 @@ public class PlayerCounter : MonoBehaviour
     public static PlayerCounter Instance { get; private set; }
 
     private int _playerCount;
-    private int[] _wormCount;
+    private int[] _characterCount;
 
 
     void Awake()
@@ -31,10 +31,10 @@ public class PlayerCounter : MonoBehaviour
     public void Setup(int playerCount ,int wormCount)
     {
         _playerCount = playerCount;
-        _wormCount = new int[_playerCount];
-        for (int i = 0; i < _wormCount.Length; i++)
+        _characterCount = new int[_playerCount];
+        for (int i = 0; i < _characterCount.Length; i++)
         {
-            _wormCount[i] = wormCount;
+            _characterCount[i] = wormCount;
         }
         UpdateText();
     }
@@ -45,7 +45,7 @@ public class PlayerCounter : MonoBehaviour
         stringBuilder.Append("Worms remaining: \n");
         for (int i = 0; i < _playerCount; i++)
         {
-            stringBuilder.Append("Player " + i + ": " + _wormCount[i] + "\n");
+            stringBuilder.Append("Player " + i + ": " + _characterCount[i] + "\n");
         }
 
         _text.text = stringBuilder.ToString();
@@ -53,13 +53,8 @@ public class PlayerCounter : MonoBehaviour
 
     public void WormKilled(int playerID)
     {
-        _wormCount[playerID] = _wormCount[playerID] - 1;
+        _characterCount[playerID]--;
         UpdateText();
-    }
-
-    public void EndGame()
-    {
-        _text.text = "";
     }
 
 }

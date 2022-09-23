@@ -46,7 +46,8 @@ public class SetupMenu : MonoBehaviour
         _startButton.gameObject.SetActive(true);
         _playerCountText.gameObject.SetActive(true);
         _wormCountText.gameObject.SetActive(true);
-        _winnerText.text = "The winner is player " + winningPlayer + "!";
+        _winnerText.text = PlayerColors.ToString(winningPlayer) + " player is the winner!";
+        _winnerText.color = PlayerColors.ToColor(winningPlayer);
     }
 
     public void SliderChanges()

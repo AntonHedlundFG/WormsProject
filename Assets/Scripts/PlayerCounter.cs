@@ -8,7 +8,8 @@ using Unity.VisualScripting;
 
 public class PlayerCounter : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _text;
+    [SerializeField] private TMP_Text _playerText;
+    [SerializeField] private TMP_Text[] _wormTexts;
 
     public static PlayerCounter Instance { get; private set; }
 
@@ -41,14 +42,12 @@ public class PlayerCounter : MonoBehaviour
 
     public void UpdateText()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append("Worms remaining: \n");
+        _playerText.text = "Worms remaining: ";
         for (int i = 0; i < _playerCount; i++)
         {
-            stringBuilder.Append("Player " + i + ": " + _wormCount[i] + "\n");
+            _wormTexts[i].text = PlayerColors.ToString(i) + " worms: " + _wormCount[i];
+            _wormTexts[i].color = PlayerColors.ToColor(i);
         }
-
-        _text.text = stringBuilder.ToString();
     }
 
     public void WormKilled(int playerID)
@@ -59,7 +58,11 @@ public class PlayerCounter : MonoBehaviour
 
     public void EndGame()
     {
-        _text.text = "";
+        _playerText.text = "";
+        foreach (TMP_Text text in _wormTexts)
+        {
+            text.text = "";
+        }
     }
 
 }

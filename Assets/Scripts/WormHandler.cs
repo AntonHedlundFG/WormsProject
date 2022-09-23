@@ -86,7 +86,8 @@ public class WormHandler : MonoBehaviour, ILife
             _renderer = GetComponent<Renderer>();
         }
 
-        _renderer.material = _wormMaterials[Math.Clamp(_controllingPlayer, 0, _wormMaterials.Length)];
+        //_renderer.material = _wormMaterials[Math.Clamp(_controllingPlayer, 0, _wormMaterials.Length)];
+        _renderer.material.SetColor("_Color", PlayerColors.ToColor(_controllingPlayer));
         
     }
 

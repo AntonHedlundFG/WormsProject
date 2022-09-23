@@ -92,10 +92,14 @@ public class WormHandler : MonoBehaviour, ILife
 
     public void TakeDamage(int dmg)
     {
+        if (_curLife <= 0) //Prevents multiple projectiles killing the unit in the same frame.
+        {
+            return;
+        }
+
         _curLife -= dmg;
         if (_curLife <= 0)
         {
-            _curLife = 0;
             Death();
         }
     }

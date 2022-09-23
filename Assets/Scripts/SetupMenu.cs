@@ -33,6 +33,8 @@ public class SetupMenu : MonoBehaviour
         _playerCountSlider.gameObject.SetActive(false);
         _wormCountSlider.gameObject.SetActive(false);
         _startButton.gameObject.SetActive(false);
+        _playerCountText.gameObject.SetActive(false);
+        _wormCountText.gameObject.SetActive(false);
         _winnerText.text = "";
         GameHandler.Instance.Setup((int)_playerCountSlider.value, (int)_wormCountSlider.value);
     }
@@ -42,6 +44,8 @@ public class SetupMenu : MonoBehaviour
         _playerCountSlider.gameObject.SetActive(true);
         _wormCountSlider.gameObject.SetActive(true);
         _startButton.gameObject.SetActive(true);
+        _playerCountText.gameObject.SetActive(true);
+        _wormCountText.gameObject.SetActive(true);
         _winnerText.text = "The winner is player " + winningPlayer + "!";
     }
 

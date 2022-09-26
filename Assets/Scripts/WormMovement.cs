@@ -57,10 +57,5 @@ public class WormMovement : MonoBehaviour
         float groundDistance = _collider.bounds.extents.y;
         _isGrounded = Physics.Raycast(transform.position, -Vector3.up, groundDistance + 0.1f);
     }
-
-    public void Stop() 
-    {
-        _rigidbody.velocity = new Vector3(0, 0, 0);
-    }
     
 }

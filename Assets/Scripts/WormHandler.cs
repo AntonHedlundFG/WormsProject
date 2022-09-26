@@ -42,7 +42,7 @@ public class WormHandler : MonoBehaviour, ILife
     public void StartTurn()
     {
         _isActive = true;
-        _wormCamera.depth = 10;
+        _wormCamera.depth = 2;
         _audioListener.enabled = true;
         _wormWeaponHandler.EquipWeapon(0);
         _wormWeaponHandler.ResetShotStatus();
@@ -50,7 +50,6 @@ public class WormHandler : MonoBehaviour, ILife
 
     public void EndTurn()
     {
-        _wormMovement.Stop();
         _isActive = false;
         _wormCamera.depth = 0;
         _audioListener.enabled = false;

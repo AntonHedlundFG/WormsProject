@@ -14,9 +14,9 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
 
     private float _minForce = 1f;
     private float _maxForce = 2.5f;
-
     private float _curForce;
-    private int _charging;
+
+    private int _charging; // 0 when not charging; -1 or 1 when charging, depending on whether charge currently increases or decreases.
     private float _chargeTime = 1f;
 
 
@@ -29,7 +29,6 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
         if (_charging != 0)
         {
             ChangeCharge();
-            _chargeMeter.UpdateBar((_curForce - _minForce) / (_maxForce - _minForce) );
         }
     }
 
@@ -79,6 +78,7 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
             _curForce = _minForce;
             _charging = 1;
         }
+        _chargeMeter.UpdateBar((_curForce - _minForce) / (_maxForce - _minForce));
     }
 
 }

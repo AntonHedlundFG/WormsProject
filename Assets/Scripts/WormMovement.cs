@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.InputSystem;
 
 public class WormMovement : MonoBehaviour
 {
@@ -23,11 +24,6 @@ public class WormMovement : MonoBehaviour
     public void Update()
     {
         CheckGrounded();
-
-        if (_wormHandler.IsActive())
-        {
-            MoveFromInput();
-        }
     }
 
     private void Init()
@@ -37,19 +33,13 @@ public class WormMovement : MonoBehaviour
         _wormHandler = GetComponent<WormHandler>();
     }
 
-    private void MoveFromInput()
+    public void Move(float moveValue)
     {
-        float xMove = Input.GetAxisRaw("Horizontal");
-        float zMove = Input.GetAxisRaw("Vertical");
-        _rigidbody.velocity = transform.forward * _moveSpeed * zMove + new Vector3(0, _rigidbody.velocity.y, 0);
-        transform.Rotate(Vector3.up * _rotateSpeed * Time.deltaTime * xMove);
-
-
-        if (Input.GetKeyDown(KeyCode.Return) && _isGrounded)
-        {
-            _rigidbody.AddForce(Vector3.up * _jumpHeight, ForceMode.VelocityChange);
-        }
-
+        _rigidbody.velocity = transform.forward * _moveSpeed * moveValue + new Vector3(0, _rigidbody.velocity.y, 0);
+    }
+    public void Rotate(float rotateValue)
+    {
+        transform.Rotate(Vector3.up * _rotateSpeed * Time.deltaTime * rotateValue);
     }
 
     private void CheckGrounded()
@@ -58,4 +48,12 @@ public class WormMovement : MonoBehaviour
         _isGrounded = Physics.Raycast(transform.position, -Vector3.up, groundDistance + 0.1f);
     }
     
+    public void Jump()
+    {
+        if (_isGrounded)
+        {
+            _rigidbody.AddForce(Vector3.up * _jumpHeight, ForceMode.VelocityChange);
+        }
+    }
+
 }

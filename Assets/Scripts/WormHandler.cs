@@ -14,6 +14,8 @@ public class WormHandler : MonoBehaviour, ILife
     private Renderer _renderer;
     private WormWeaponHandler _wormWeaponHandler;
     private int _controllingPlayer;
+    private PlayerInputController _playerInputController;
+    private WormMovement _wormMovement;
 
     private bool _isActive;
 
@@ -36,6 +38,8 @@ public class WormHandler : MonoBehaviour, ILife
         _turnHandler = TurnHandler.Instance;
         _renderer = GetComponent<Renderer>();
         _wormWeaponHandler = GetComponentInChildren<WormWeaponHandler>();
+        _wormMovement = GetComponent<WormMovement>();
+        _playerInputController = PlayerInputController.Instance;
     }
 
     public void StartTurn()
@@ -45,6 +49,8 @@ public class WormHandler : MonoBehaviour, ILife
         _audioListener.enabled = true;
         _wormWeaponHandler.EquipWeapon(0);
         _wormWeaponHandler.ResetShotStatus();
+
+        _playerInputController.SetCurrentWorm(_wormMovement, _wormWeaponHandler);
     }
 
     public void EndTurn()
@@ -54,6 +60,7 @@ public class WormHandler : MonoBehaviour, ILife
         _audioListener.enabled = false;
         _turnHandler.AddWorm(gameObject);
         _wormWeaponHandler.UnEquipWeapon();
+        _playerInputController.SetCurrentWorm(null, null);
     }
 
     public void EndTurn(float delay)
@@ -113,4 +120,5 @@ public class WormHandler : MonoBehaviour, ILife
     {
         return (float) _curLife / _maxLife;
     }
+
 }

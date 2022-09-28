@@ -18,7 +18,6 @@ public class WormWeaponHandler : MonoBehaviour
     private bool _hasShotThisTurn = false;
 
     private float _endTurnDelay = 5f;
-    private float _rotationSpeed = 50f;
 
     private float _maxrotation = 110f;
     private float _minrotation = 10f;
@@ -27,52 +26,44 @@ public class WormWeaponHandler : MonoBehaviour
     {
         Init();
     }
-    void Update()
-    {
-        if (_wormHandler.IsActive() && _equippedWeaponObject != null)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && !_hasShotThisTurn)
-            {
-                _equippedWeapon.PreShoot();
-                _startedShootingThisTurn = true;
-            }
-
-            if (Input.GetKeyUp(KeyCode.Space) && !_hasShotThisTurn)
-            {
-                _equippedWeapon.Shoot();
-                _hasShotThisTurn = true;
-                _turnHandler.NextActiveWorm(_endTurnDelay);
-            }
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                RotateWeapon(_rotationSpeed * Time.deltaTime);
-            } else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                RotateWeapon(-_rotationSpeed * Time.deltaTime);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !_startedShootingThisTurn)
-            {
-                EquipWeapon(0);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2) && !_startedShootingThisTurn)
-            {
-                EquipWeapon(1);
-            }
-        }
-
-        
-
-        
-    }
-
     void Init()
     {
         _wormHandler = GetComponentInParent<WormHandler>();
         _turnHandler = TurnHandler.Instance;
         _chargeMeter = GetComponentInChildren<ChargeMeter>();
     }
+
+    public void Shoot()
+    {
+        if (!_hasShotThisTurn && _startedShootingThisTurn)
+        {
+            _equippedWeapon.Shoot();
+            _hasShotThisTurn = true;
+            _turnHandler.NextActiveWorm(_endTurnDelay);
+        }
+    }
+
+    public void PreShoot()
+    {
+        if (!_startedShootingThisTurn)
+        {
+            _equippedWeapon.PreShoot();
+            _startedShootingThisTurn = true;
+        }
+    }
+
+    public void SwapToGrenadeLauncher()
+    {
+        if (!_startedShootingThisTurn)
+            EquipWeapon(0);
+    }
+    public void SwapToShotGun()
+    {
+        if (!_startedShootingThisTurn)
+            EquipWeapon(1);
+    }
+
+    
     public void EquipWeapon(int weaponID)
     {
         if (weaponID >= _weapons.Length)

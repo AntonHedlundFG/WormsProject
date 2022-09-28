@@ -6,7 +6,6 @@ public class TurnHandler : MonoBehaviour
 {
     private Queue<GameObject> _worms;
     private GameHandler _gameHandler;
-
     private GameObject _currentActiveWorm;
 
     public static TurnHandler Instance { get; private set; }

@@ -45,7 +45,7 @@ public class HealthBar : MonoBehaviour
         GameObject currentWorm = _turnhandler.GetActiveWorm();
         if (currentWorm != null)
         {
-            _camera = currentWorm.GetComponent<WormHandler>().GetCamera();
+            _camera = currentWorm.GetComponent<WormHandler>().WormCamera;
         }
         
         if (_camera == null)

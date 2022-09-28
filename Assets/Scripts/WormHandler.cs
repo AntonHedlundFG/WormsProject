@@ -7,14 +7,14 @@ public class WormHandler : MonoBehaviour, ILife
 {
     [SerializeField] private Material[] _wormMaterials;
 
-    private WormMovement _wormMovement;
-    private Camera _wormCamera;
+    public Camera WormCamera { get; private set; }
+    
     private AudioListener _audioListener;
     private TurnHandler _turnHandler;
     private Renderer _renderer;
     private WormWeaponHandler _wormWeaponHandler;
-
     private int _controllingPlayer;
+
     private bool _isActive;
 
     private int _maxLife = 100;
@@ -30,8 +30,7 @@ public class WormHandler : MonoBehaviour, ILife
     private void Init()
     {
         _curLife = _maxLife;
-        _wormMovement = GetComponent<WormMovement>();
-        _wormCamera = GetComponentInChildren<Camera>();
+        WormCamera = GetComponentInChildren<Camera>();
         _audioListener = GetComponentInChildren<AudioListener>();
         _isActive = false;
         _turnHandler = TurnHandler.Instance;
@@ -42,7 +41,7 @@ public class WormHandler : MonoBehaviour, ILife
     public void StartTurn()
     {
         _isActive = true;
-        _wormCamera.depth = 2;
+        WormCamera.depth = 2;
         _audioListener.enabled = true;
         _wormWeaponHandler.EquipWeapon(0);
         _wormWeaponHandler.ResetShotStatus();
@@ -51,7 +50,7 @@ public class WormHandler : MonoBehaviour, ILife
     public void EndTurn()
     {
         _isActive = false;
-        _wormCamera.depth = 0;
+        WormCamera.depth = 0;
         _audioListener.enabled = false;
         _turnHandler.AddWorm(gameObject);
         _wormWeaponHandler.UnEquipWeapon();
@@ -85,7 +84,6 @@ public class WormHandler : MonoBehaviour, ILife
             _renderer = GetComponent<Renderer>();
         }
 
-        //_renderer.material = _wormMaterials[Math.Clamp(_controllingPlayer, 0, _wormMaterials.Length)];
         _renderer.material.SetColor("_Color", PlayerColors.ToColor(_controllingPlayer));
         
     }
@@ -107,13 +105,8 @@ public class WormHandler : MonoBehaviour, ILife
     private void Death()
     {
         PlayerCounter.Instance.WormKilled(_controllingPlayer);
-        _wormCamera.GetComponent<CameraDestructionDelay>().DelayDestruction();
+        WormCamera.GetComponent<CameraDestructionDelay>().DelayDestruction();
         Destroy(gameObject);
-    }
-
-    public Camera GetCamera()
-    {
-        return _wormCamera;
     }
 
     public float GetLifeRatio()

@@ -7,7 +7,6 @@ public class TurnHandler : MonoBehaviour
     private Queue<GameObject> _worms;
     private GameHandler _gameHandler;
     private GameObject _currentActiveWorm;
-
     public static TurnHandler Instance { get; private set; }
 
     void Start()
@@ -41,9 +40,8 @@ public class TurnHandler : MonoBehaviour
     {
         if (_currentActiveWorm != null)
         {
-            _currentActiveWorm.GetComponent<WormHandler>().EndTurn();
+            _worms.Enqueue(_currentActiveWorm);
         }
-
         CheckVictory();
 
         do

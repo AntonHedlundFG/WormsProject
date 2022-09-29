@@ -60,11 +60,11 @@ public class PlayerInputController : MonoBehaviour
     {
         if (context.started)
         {
-            _wormWeaponHandler.PreShoot();
+            _wormWeaponHandler?.PreShoot();
         }
         if (context.canceled)
         {
-            _wormWeaponHandler.Shoot();
+            _wormWeaponHandler?.Shoot();
         }
 
     }
@@ -78,7 +78,7 @@ public class PlayerInputController : MonoBehaviour
     {
         if (context.started)
         {
-            _wormWeaponHandler.SwapToGrenadeLauncher();
+            _wormWeaponHandler?.SwapToGrenadeLauncher();
         }
     }
 
@@ -86,7 +86,7 @@ public class PlayerInputController : MonoBehaviour
     {
         if (context.started)
         {
-            _wormWeaponHandler.SwapToShotGun();
+            _wormWeaponHandler?.SwapToShotGun();
         }
     }
 }

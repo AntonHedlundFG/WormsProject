@@ -17,8 +17,6 @@ public class WormWeaponHandler : MonoBehaviour
     private bool _startedShootingThisTurn = false;
     private bool _hasShotThisTurn = false;
 
-    private float _endTurnDelay = 5f;
-
     private float _maxrotation = 110f;
     private float _minrotation = 10f;
 
@@ -39,7 +37,7 @@ public class WormWeaponHandler : MonoBehaviour
         {
             _equippedWeapon.Shoot();
             _hasShotThisTurn = true;
-            _turnHandler.NextActiveWorm(_endTurnDelay);
+            _wormHandler.EndTurn();
         }
     }
 
@@ -86,6 +84,8 @@ public class WormWeaponHandler : MonoBehaviour
 
     public void RotateWeapon(float rotationDegrees)
     {
+        if (_equippedWeaponObject == null)
+            return;
         float currentRotation = _equippedWeaponObject.transform.localEulerAngles.x;
         float newRotation = Mathf.Clamp(currentRotation + rotationDegrees, _minrotation, _maxrotation);
         _equippedWeaponObject.transform.localEulerAngles = new Vector3(newRotation, 0, 0);

@@ -8,7 +8,7 @@ public class CameraDestructionDelay : MonoBehaviour
     public void DelayDestruction()
     {
         transform.SetParent(null);
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 5f);
     }
 
 }

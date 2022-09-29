@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 146953021428049056}
   - component: {fileID: 5810595933917934620}
   - component: {fileID: 2089306108659615053}
+  - component: {fileID: 3404136592419916612}
+  - component: {fileID: 8103579558609807121}
   m_Layer: 0
   m_Name: ShotGun
   m_TagString: Untagged
@@ -76,7 +78,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d7fa5a56bcda32c479b6223d9b477314, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,3 +114,34 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!111 &3404136592419916612
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192810733982111009}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: d718e1594439ded409c6667dbf853065, type: 2}
+  - {fileID: 7400000, guid: 668c1605a7ac87c498b61dce2b621880, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &8103579558609807121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192810733982111009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad88e5135554db343962546014234431, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipAnimation: {fileID: 7400000, guid: d718e1594439ded409c6667dbf853065, type: 2}
+  _unEquipAnimation: {fileID: 7400000, guid: 668c1605a7ac87c498b61dce2b621880, type: 2}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider _slider;
     
     private TurnHandler _turnhandler;
-    private Camera _camera;
+    private CinemachineVirtualCamera _camera;
     private WormHandler _wormHandler;
 
     
@@ -29,10 +30,6 @@ public class HealthBar : MonoBehaviour
     private void Init()
     {
         _wormHandler = GetComponentInParent<WormHandler>();
-        if (_wormHandler == null)
-        {
-            Debug.Log("failed to get worm");
-        }
     }
 
     private void UpdateCamera()
@@ -45,7 +42,7 @@ public class HealthBar : MonoBehaviour
         GameObject currentWorm = _turnhandler.GetActiveWorm();
         if (currentWorm != null)
         {
-            _camera = currentWorm.GetComponent<WormHandler>().WormCamera;
+            _camera = currentWorm.GetComponent<WormHandler>().WormCinemachine;
         }
         
         if (_camera == null)

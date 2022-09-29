@@ -96,9 +96,4 @@ public class WormWeaponHandler : MonoBehaviour
         _hasShotThisTurn = false;
         _startedShootingThisTurn = false;
     }
-
-    public ChargeMeter GetChargeMeter()
-    {
-        return _chargeMeter;
-    }
 }

@@ -7,8 +7,7 @@ using UnityEngine;
 public class WormHandler : MonoBehaviour, ILife
 {
     [SerializeField] private Material[] _wormMaterials;
-
-    public Camera WormCamera { get; private set; }
+    
     public CinemachineVirtualCamera WormCinemachine { get; private set; }
 
     private AudioListener _audioListener;
@@ -26,7 +25,7 @@ public class WormHandler : MonoBehaviour, ILife
     private int _maxLife = 100;
     private int _curLife;
 
-    void Start()
+    private void Start()
     {
         Init();
     }
@@ -36,7 +35,6 @@ public class WormHandler : MonoBehaviour, ILife
     private void Init()
     {
         _curLife = _maxLife;
-        WormCamera = GetComponentInChildren<Camera>();
         WormCinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         _audioListener = GetComponentInChildren<AudioListener>();
         _isActive = false;
@@ -47,19 +45,7 @@ public class WormHandler : MonoBehaviour, ILife
         _playerInputController = PlayerInputController.Instance;
     }
 
-    /*public void StartTurn()
-    {
-        _isActive = true;
-        WormCinemachine.Priority = 2;
-        _wormWeaponHandler.EquipWeapon(0);
-        _wormWeaponHandler.ResetShotStatus();
-        //WormCamera.depth = 2;
-        //WormCinemachine.Priority = 2;
-
-        _playerInputController.SetCurrentWorm(_wormMovement, _wormWeaponHandler);
-    }*/
-
-    private IEnumerator IEStartTurn(float delay)
+    private IEnumerator StartTurnRoutine(float delay)
     {
         yield return new WaitForSeconds(_turnDelay);
         _wormWeaponHandler.EquipWeapon(0);
@@ -71,37 +57,26 @@ public class WormHandler : MonoBehaviour, ILife
     {
         WormCinemachine.Priority = 2;
         _audioListener.enabled = true;
-        StartCoroutine(IEStartTurn(_turnDelay));
-
-        //_audioListener.enabled = true;
-        //Invoke("StartTurn", delay);
+        StartCoroutine(StartTurnRoutine(_turnDelay));
     }
     public void EndTurn()
     {
-        StartCoroutine(IEEndTurn(_turnDelay));
+        StartCoroutine(EndTurnRoutine(_turnDelay));
         
     }
 
-    private IEnumerator IEEndTurn(float delay)
+    private IEnumerator EndTurnRoutine(float delay)
     {
         yield return new WaitForSeconds(delay); 
         _isActive = false;
         _audioListener.enabled = false;
         _wormWeaponHandler.UnEquipWeapon();
-        //WormCamera.depth = 0;
-        //WormCinemachine.Priority = 0;
         WormCinemachine.Priority = 0;
         _playerInputController.SetCurrentWorm(null, null);
         _turnHandler.NextActiveWorm();
     }
 
-    public void EndTurn(float delay)
-    {
-        _turnHandler.AddWorm(gameObject);
-        Invoke("EndTurn", delay);
-    }
 
-    
 
     public bool IsActive()
     {
@@ -147,7 +122,6 @@ public class WormHandler : MonoBehaviour, ILife
     private void Death()
     {
         PlayerCounter.Instance.WormKilled(_controllingPlayer);
-        WormCamera.GetComponent<CameraDestructionDelay>().DelayDestruction();
         WormCinemachine.GetComponent<CameraDestructionDelay>().DelayDestruction();
         _playerInputController.SetCurrentWorm(null, null);
         WormCinemachine.Priority = 0;

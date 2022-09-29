@@ -6,6 +6,7 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
 {
     [SerializeField] private GameObject _grenadeGameObject;
     [SerializeField] private GameObject _chargeMeterObject;
+    private WeaponAnimation _weaponAnimation;
 
     private GameObject _grenade;
     private ChargeMeter _chargeMeter;
@@ -20,9 +21,9 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
     private float _chargeTime = 1f;
 
 
-    public void Start()
+    private void Awake()
     {
-        
+        _weaponAnimation = GetComponent<WeaponAnimation>();
     }
     public void Update()
     {
@@ -81,4 +82,14 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
         _chargeMeter.UpdateBar((_curForce - _minForce) / (_maxForce - _minForce));
     }
 
+    public void UnEquip()
+    {
+        _weaponAnimation.PlayUnEquip();
+        Destroy(gameObject, 1f);
+    }
+
+    public void Equip()
+    {
+        _weaponAnimation.PlayEquip();
+    }
 }

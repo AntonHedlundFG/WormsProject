@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShotGun : MonoBehaviour, IWeapon
 {
     [SerializeField] private GameObject _shotGunSlugGameObject;
+    private WeaponAnimation _weaponAnimation;
 
     private float _startRotation = 90f;
 
@@ -15,6 +16,11 @@ public class ShotGun : MonoBehaviour, IWeapon
     private float _fireDuration = 0.1f;
     private int _delayedFireCount = 10;
 
+    private void Awake()
+    {
+        _weaponAnimation = GetComponent<WeaponAnimation>();
+    }
+    
     public void PreShoot()
     {
 
@@ -52,5 +58,16 @@ public class ShotGun : MonoBehaviour, IWeapon
         var slug = Instantiate(_shotGunSlugGameObject, transform.position, Quaternion.identity);
         slug.transform.eulerAngles = transform.eulerAngles + new Vector3(Random.Range(-_spreadDegrees, _spreadDegrees), Random.Range(-_spreadDegrees, _spreadDegrees), Random.Range(-_spreadDegrees, _spreadDegrees));
         slug.GetComponent<Rigidbody>().AddForce(slug.transform.up * _slugForce, ForceMode.Impulse);
+    }
+
+    public void UnEquip()
+    {
+        _weaponAnimation.PlayUnEquip();
+        Destroy(gameObject, 1f);
+    }
+
+    public void Equip()
+    {
+        _weaponAnimation.PlayEquip();
     }
 }

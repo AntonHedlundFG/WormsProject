@@ -74,12 +74,12 @@ public class WormWeaponHandler : MonoBehaviour
         _equippedWeapon = _equippedWeaponObject.GetComponent<IWeapon>();
         _equippedWeapon.SetChargeMeter(_chargeMeter);
         RotateWeapon(_equippedWeaponObject.GetComponent<IWeapon>().GetStartRotation());
-        
+        _equippedWeapon.Equip();
     }
 
     public void UnEquipWeapon()
     {
-        Destroy(_equippedWeaponObject);
+        _equippedWeapon?.UnEquip();
     }
 
     public void RotateWeapon(float rotationDegrees)

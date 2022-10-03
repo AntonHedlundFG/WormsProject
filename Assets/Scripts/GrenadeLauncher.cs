@@ -84,12 +84,12 @@ public class GrenadeLauncher : MonoBehaviour, IWeapon
 
     public void UnEquip()
     {
-        _weaponAnimation.PlayUnEquip();
+        _weaponAnimation?.PlayUnEquip();
         Destroy(gameObject, 1f);
     }
 
     public void Equip()
     {
-        _weaponAnimation.PlayEquip();
+        _weaponAnimation?.PlayEquip();
     }
 }

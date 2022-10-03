@@ -5,8 +5,8 @@ using UnityEngine;
 public sealed class ObjectStorage : MonoBehaviour
 {
     [SerializeField] private GameObject _slugGameObject;
-    public static ObjectStorage Instance { set; private get; }
-    private Queue<GameObject> _slugs;
+    public static ObjectStorage Instance { private set; get; }
+    private Queue<GameObject> _shotGunSlugs;
 
     void Awake()
     {
@@ -27,27 +27,31 @@ public sealed class ObjectStorage : MonoBehaviour
 
     private void Init()
     {
-        _slugs = new Queue<GameObject>();
+        _shotGunSlugs = new Queue<GameObject>();
     }
 
     public GameObject GetShotGunSlug()
     {
         GameObject returnSlug;
-        if (_slugs.Count > 0)
-            returnSlug = _slugs.Dequeue();
+        if (_shotGunSlugs.Count > 0)
+        {
+            returnSlug = _shotGunSlugs.Dequeue();
+            returnSlug.SetActive(true);
+        }
+            
         else
-            returnSlug = Instantiate(_slugGameObject);
+            returnSlug = Instantiate(_slugGameObject, transform);
         return returnSlug;
     }
 
     public void ReturnShotGunSlug(GameObject returnSlug)
     {
         returnSlug.SetActive(false);
-        _slugs.Enqueue(returnSlug);
+        _shotGunSlugs.Enqueue(returnSlug);
     }
 
     public void ClearAllStorage()
     {
-        _slugs.Clear();
+        _shotGunSlugs.Clear();
     }
 }

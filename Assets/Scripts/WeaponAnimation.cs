@@ -17,10 +17,10 @@ public class WeaponAnimation : MonoBehaviour
 
     public void PlayEquip()
     {
-        _animation.Play(_equipAnimation.name);
+        _animation?.Play(_equipAnimation.name);
     }
     public void PlayUnEquip()
     {
-        _animation.Play(_unEquipAnimation.name);
+        _animation?.Play(_unEquipAnimation.name);
     }
 }

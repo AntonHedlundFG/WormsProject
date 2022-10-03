@@ -53,21 +53,35 @@ public class ShotGun : MonoBehaviour, IWeapon
         }
     }
 
-    private void FireSlug()
+    /*private void FireSlug()
     {
         var slug = Instantiate(_shotGunSlugGameObject, transform.position, Quaternion.identity);
         slug.transform.eulerAngles = transform.eulerAngles + new Vector3(Random.Range(-_spreadDegrees, _spreadDegrees), Random.Range(-_spreadDegrees, _spreadDegrees), Random.Range(-_spreadDegrees, _spreadDegrees));
         slug.GetComponent<Rigidbody>().AddForce(slug.transform.up * _slugForce, ForceMode.Impulse);
+    }*/
+
+    private void FireSlug()
+    {
+        var slug = ObjectStorage.Instance.GetShotGunSlug();
+        slug.transform.position = transform.position;
+        slug.transform.eulerAngles = transform.eulerAngles + SpreadVector();
+        slug.GetComponent<Rigidbody>().AddForce(slug.transform.up * _slugForce, ForceMode.Impulse);
+
     }
 
     public void UnEquip()
     {
-        _weaponAnimation.PlayUnEquip();
+        _weaponAnimation?.PlayUnEquip();
         Destroy(gameObject, 1f);
     }
 
     public void Equip()
     {
         _weaponAnimation.PlayEquip();
+    }
+
+    private Vector3 SpreadVector()
+    {
+        return new Vector3(Random.Range(-_spreadDegrees, _spreadDegrees), Random.Range(-_spreadDegrees, _spreadDegrees), Random.Range(-_spreadDegrees, _spreadDegrees));
     }
 }

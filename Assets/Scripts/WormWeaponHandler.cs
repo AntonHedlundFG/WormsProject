@@ -64,11 +64,8 @@ public class WormWeaponHandler : MonoBehaviour
     
     public void EquipWeapon(int weaponID)
     {
-        if (weaponID >= _weapons.Length)
-        {
-            Debug.Log("Testing?");
+        if (weaponID >= _weapons.Length || weaponID < 0)
             return;
-        }
         UnEquipWeapon();
         _equippedWeaponObject = Instantiate(_weapons[weaponID], _weaponHolder.transform.position, Quaternion.identity, _weaponHolder.transform);
         _equippedWeapon = _equippedWeaponObject.GetComponent<IWeapon>();
@@ -79,7 +76,8 @@ public class WormWeaponHandler : MonoBehaviour
 
     public void UnEquipWeapon()
     {
-        _equippedWeapon?.UnEquip();
+        if (_equippedWeaponObject != null)
+            _equippedWeapon.UnEquip();
     }
 
     public void RotateWeapon(float rotationDegrees)

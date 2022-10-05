@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShotGunSlug : MonoBehaviour
@@ -60,7 +58,6 @@ public class ShotGunSlug : MonoBehaviour
     {
         _rb.velocity = Vector3.zero;
         ObjectStorage.Instance.ReturnShotGunSlug(gameObject);
-        gameObject.SetActive(false);
     }
 
 }

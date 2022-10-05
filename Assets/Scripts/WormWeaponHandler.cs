@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WormWeaponHandler : MonoBehaviour
@@ -11,7 +8,6 @@ public class WormWeaponHandler : MonoBehaviour
     private GameObject _equippedWeaponObject;
     private IWeapon _equippedWeapon;
     private WormHandler _wormHandler;
-    private TurnHandler _turnHandler;
     private ChargeMeter _chargeMeter;
 
     private bool _startedShootingThisTurn = false;
@@ -27,7 +23,6 @@ public class WormWeaponHandler : MonoBehaviour
     void Init()
     {
         _wormHandler = GetComponentInParent<WormHandler>();
-        _turnHandler = TurnHandler.Instance;
         _chargeMeter = GetComponentInChildren<ChargeMeter>();
     }
 

@@ -18,8 +18,6 @@ public class WormHandler : MonoBehaviour, ILife
     private PlayerInputController _playerInputController;
     private WormMovement _wormMovement;
 
-    private bool _isActive;
-
     private float _turnDelay = 2.5f;
 
     private int _maxLife = 100;
@@ -29,15 +27,11 @@ public class WormHandler : MonoBehaviour, ILife
     {
         Init();
     }
-
-    
-
     private void Init()
     {
         _curLife = _maxLife;
         WormCinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         _audioListener = GetComponentInChildren<AudioListener>();
-        _isActive = false;
         _turnHandler = TurnHandler.Instance;
         _renderer = GetComponent<Renderer>();
         _wormWeaponHandler = GetComponentInChildren<WormWeaponHandler>();
@@ -49,7 +43,6 @@ public class WormHandler : MonoBehaviour, ILife
     {
         yield return new WaitForSeconds(_turnDelay);
         _wormWeaponHandler.EquipWeapon(0);
-        _isActive = true;
         _wormWeaponHandler.ResetShotStatus();
         _playerInputController.SetCurrentWorm(_wormMovement, _wormWeaponHandler);
     }
@@ -62,27 +55,18 @@ public class WormHandler : MonoBehaviour, ILife
     public void EndTurn()
     {
         StartCoroutine(EndTurnRoutine(_turnDelay));
-        
     }
 
     private IEnumerator EndTurnRoutine(float delay)
     {
         yield return new WaitForSeconds(delay); 
-        _isActive = false;
         _audioListener.enabled = false;
         _wormWeaponHandler.UnEquipWeapon();
         WormCinemachine.Priority = 0;
         _playerInputController.SetCurrentWorm(null, null);
         _turnHandler.NextActiveWorm();
     }
-
-
-
-    public bool IsActive()
-    {
-        return _isActive;
-    }
-
+    
     public void SetControllingPlayer(int playerID)
     {
         _controllingPlayer = playerID;

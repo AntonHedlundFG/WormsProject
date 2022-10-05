@@ -4,24 +4,14 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject wormGameObject;
-    [SerializeField] private GameObject turnHandlerGameObject;
+    [SerializeField] private GameObject _wormGameObject;
+    [SerializeField] private GameObject _turnHandlerGameObject;
 
-    [SerializeField] private int _playerAmount = 2;
-    [SerializeField] private int _wormsPerPlayer = 1;
-
+    private int _playerAmount = 2;
+    private int _wormsPerPlayer = 1;
 
     private TurnHandler _turnHandler;
-
     public static GameHandler Instance { get; private set; }
-
-
-
-    
-    void Start()
-    {
-        Init();
-    }
 
     void Awake()
     {
@@ -34,12 +24,9 @@ public class GameHandler : MonoBehaviour
             Instance = this;
         }
     }
-
-    public void Setup(int playerAmount, int wormsPerPlayer)
+    void Start()
     {
-        _playerAmount = playerAmount;
-        _wormsPerPlayer = wormsPerPlayer;
-        SetupWorms();
+        Init();
     }
 
     private void Init()
@@ -47,19 +34,18 @@ public class GameHandler : MonoBehaviour
 
         if (TurnHandler.Instance == null)
         {
-            Instantiate(turnHandlerGameObject);
+            Instantiate(_turnHandlerGameObject);
         }
         _turnHandler = TurnHandler.Instance;
 
     }
 
-    private void CreateNewWorm(int playerID)
+    public void Setup(int playerAmount, int wormsPerPlayer)
     {
-        GameObject newWorm = Instantiate(wormGameObject, new Vector3(Random.Range(30, 70), 7, Random.Range(80, 120)), Quaternion.identity);
-        _turnHandler.AddWorm(newWorm);
-        newWorm.GetComponent<WormHandler>().SetControllingPlayer(playerID);
+        _playerAmount = playerAmount;
+        _wormsPerPlayer = wormsPerPlayer;
+        SetupWorms();
     }
-
     private void SetupWorms()
     {
         for (int i = 0; i < _wormsPerPlayer; i++)
@@ -72,5 +58,11 @@ public class GameHandler : MonoBehaviour
 
         _turnHandler.StartGame();
         PlayerCounter.Instance.Setup(_playerAmount, _wormsPerPlayer);
+    }
+    private void CreateNewWorm(int playerID)
+    {
+        GameObject newWorm = Instantiate(_wormGameObject, new Vector3(Random.Range(30, 70), 7, Random.Range(80, 120)), Quaternion.identity);
+        _turnHandler.AddWorm(newWorm);
+        newWorm.GetComponent<WormHandler>().SetControllingPlayer(playerID);
     }
 }

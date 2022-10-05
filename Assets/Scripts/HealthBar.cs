@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,14 +26,11 @@ public class HealthBar : MonoBehaviour
     private void Init()
     {
         _wormHandler = GetComponentInParent<WormHandler>();
+        _turnhandler = TurnHandler.Instance;
     }
 
     private void UpdateCamera()
     {
-        if (_turnhandler == null)
-        {
-            _turnhandler = TurnHandler.Instance;
-        }
 
         GameObject currentWorm = _turnhandler.GetActiveWorm();
         if (currentWorm != null)

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChargeMeter : MonoBehaviour
@@ -19,7 +16,7 @@ public class ChargeMeter : MonoBehaviour
         chargeBar.transform.localPosition = new Vector3(percentage / 2 - 0.5f, 0, 0);
     }
 
-    public void SetActive(Boolean active)
+    public void SetActive(bool active)
     {
         gameObject.SetActive(active);
     }

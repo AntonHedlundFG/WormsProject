@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +13,7 @@ public class PlayerInputController : MonoBehaviour
 
 
 
-    void Awake()
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {

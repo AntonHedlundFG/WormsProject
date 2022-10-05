@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.InputSystem;
 
 public class WormMovement : MonoBehaviour
 {
@@ -12,7 +8,6 @@ public class WormMovement : MonoBehaviour
 
     private Collider _collider;
     private Rigidbody _rigidbody;
-    private WormHandler _wormHandler;
 
     private bool _isGrounded;
 
@@ -30,7 +25,6 @@ public class WormMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-        _wormHandler = GetComponent<WormHandler>();
     }
 
     public void Move(float moveValue)

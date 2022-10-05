@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnHandler : MonoBehaviour
 {
     private Queue<GameObject> _worms;
-    private GameHandler _gameHandler;
     private GameObject _currentActiveWorm;
     public static TurnHandler Instance { get; private set; }
 
@@ -28,7 +26,6 @@ public class TurnHandler : MonoBehaviour
     private void Init()
     {
         _worms = new Queue<GameObject>();
-        _gameHandler = GameHandler.Instance;
     }
 
     public void NextActiveWorm()
